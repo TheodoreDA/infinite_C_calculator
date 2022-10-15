@@ -6,17 +6,13 @@
 
 /* Errors checked:
  *     - unallowed characters like alpha
- *     - 
- *     - 
- *     - 
- *     - 
- *     - 
- *     - 
- *     - 
- *     - 
- *     - 
- *     - 
- *     - 
+ *     - parenthesis order
+ *     - parenthesis number
+ *     - expr start with ope (except '-')
+ *     - expr doesn't have an ope
+ *     - expr end with ope
+ *     - expr chain two ope
+ *     - operator after opening parenthesis
 */
 
 
@@ -38,6 +34,9 @@ int check_operators(const char *expr)
 
         if (Utils.is_in(prev_ope, operators))
             return Logger.error("Cannot chain two operators");
+
+        if (ope_ptr[0] != '-' && prev_ope == '(')
+            return Logger.error("Cannot put operator after opening parenthesis");
     } while (1);
     return 0;
 }
