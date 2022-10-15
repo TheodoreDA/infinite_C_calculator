@@ -11,6 +11,23 @@ const char *contains(const char *haystack, const char *needles)
     return NULL;
 }
 
+char contains_other_than(const char *str, const char *allowed_chars)
+{
+    for (int i = 0; str[i]; i++) {
+        char tmp = 0;
+
+        for (int j = 0; allowed_chars[j]; j++) {
+            if (str[i] == allowed_chars[j]) {
+                tmp = 1;
+                break;
+            }
+        }
+        if (tmp == 0)
+            return 1;
+    }
+    return 0;
+}
+
 char is_in(const char c, const char *str)
 {
     for (int i = 0; str[i]; i++) {

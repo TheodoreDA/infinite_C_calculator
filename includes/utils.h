@@ -3,6 +3,7 @@
 
 struct s_utils {
     const char *(* contains)(const char *haystack, const char *needles);
+    char (* contains_other_than)(const char *str, const char *allowed_chars);
     char (* is_in)(const char c, const char *str);
     char (* is_not_in)(const char c, const char *str);
     int (* count_occurence)(const char *haystack, const char needle);
@@ -13,6 +14,7 @@ const char *contains(const char *haystack, const char *needles);
 char is_in(const char c, const char *str);
 char is_not_in(const char c, const char *str);
 int count_occurence(const char *haystack, const char needle);
+char contains_other_than(const char *str, const char *allowed_chars);
 
 
 #endif /* !UTILS_H_ */

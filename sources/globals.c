@@ -6,6 +6,7 @@ const char *operators_without_minus = "+/*\%";
 
 const utils_t Utils = {
     contains,
+    contains_other_than,
     is_in,
     is_not_in,
     count_occurence,
