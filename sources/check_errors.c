@@ -4,6 +4,22 @@
 
 #include <stdlib.h>
 
+/* Errors checked:
+ *     - unallowed characters like alpha
+ *     - 
+ *     - 
+ *     - 
+ *     - 
+ *     - 
+ *     - 
+ *     - 
+ *     - 
+ *     - 
+ *     - 
+ *     - 
+*/
+
+
 int check_operators(const char *expr)
 {
     const char *ope_ptr = expr;
@@ -45,19 +61,8 @@ int check_parenthesis(const char *expr)
 
 int check_allowed_chars(const char *expr)
 {
-    char tmp = 0;
-
-    for (int i = 0; expr[i]; i++) {
-        tmp = 0;
-        for (int j = 0; allowed_chars[j]; j++) {
-            if (expr[i] == allowed_chars[j]) {
-                tmp = 1;
-                break;
-            }
-        }
-        if (tmp == 0)
-            return Logger.error("Unallowed character");
-    }
+    if (Utils.contains_other_than(expr, allowed_chars))
+        return Logger.error("Unallowed character");
     return 0;
 }
 
