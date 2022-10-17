@@ -52,6 +52,7 @@ char *process_expr(char *expr)
 {
     int ope_idx = find_next_operator(expr);
     char *operation = calloc(strlen(expr) + 1, sizeof(char));
+    char *result = NULL;
     int i = 0;
     int j = 0;
 
@@ -66,11 +67,17 @@ char *process_expr(char *expr)
             if (Utils.is_not_a_number(expr[j]))
                 break;
         }
-        j--;
+        j++;
         for (int k = 0; j != i; j++)
             operation[k++] = expr[j];
-        operation = process_operation(operation, find_next_operator(operation));
+        result = process_operation(operation, find_next_operator(operation));
+        if (result == NULL) {
+            free(operation);
+            return NULL;
+        }
+        // HERE
 
+        free(result);
         ope_idx = find_next_operator(expr);
     }
     free(operation);
@@ -100,6 +107,10 @@ char *handle_parenthesis(char *expr) {
         sub_expr[l++] = expr[k];
     // Process expr, and set result to another var
     result = process_expr(sub_expr);
+    if (result == NULL) {
+        free(sub_expr);
+        return NULL;
+    }
     // Override expr's parenthesis with result (it should be smaller than inner expr)
     for (int l = 0; result[l]; l++)
         expr[j++] = result[l];
@@ -116,7 +127,13 @@ char *handle_parenthesis(char *expr) {
 int bistro(const char *expr)
 {
     char *without_parenthesis = handle_parenthesis(strdup(expr));
-    char *result = process_expr(without_parenthesis);
+    char *result = NULL;
+
+    if (without_parenthesis == NULL)
+        return 84;
+    result = process_expr(without_parenthesis);
+    if (result == NULL)
+        return 84;
     printf("Result: %s\n", result);
     free(without_parenthesis);
     free(result);
