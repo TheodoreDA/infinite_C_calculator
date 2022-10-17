@@ -4,6 +4,11 @@ SRC		=		sources/main.c				\
 				sources/check_errors.c		\
 				sources/globals.c			\
 				sources/bistro.c			\
+				sources/infin_add.c			\
+				sources/infin_min.c			\
+				sources/infin_div.c			\
+				sources/infin_mult.c		\
+				sources/infin_mod.c			\
 				sources/utils.c				\
 				sources/logger.c
 

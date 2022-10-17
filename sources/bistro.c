@@ -1,3 +1,4 @@
+#include "../includes/bistro.h"
 #include "../includes/globals.h"
 #include "../includes/null.h"
 #include <stdlib.h>
@@ -11,12 +12,69 @@
  *     - 
 */
 
+char *process_operation(char *operation, int ope_idx)
+{
+    switch (operation[ope_idx]) {
+        case ('+'):
+            return exec_infin_add(operation, ope_idx);
+        case ('-'):
+            return exec_infin_min(operation, ope_idx);
+        case ('/'):
+            return exec_infin_div(operation, ope_idx);
+        case ('*'):
+            return exec_infin_mult(operation, ope_idx);
+        case ('\%'):
+            return exec_infin_mod(operation, ope_idx);
+        default:
+            return NULL;
+    }
+}
+
+// TODO: check if - is an operator or negative nbr
+int find_next_operator(char *expr)
+{
+    int prio_idx = 0;
+
+    while (priorities[prio_idx]) {
+        for (int i = 0; expr[i]; i++) {
+            for (int j = 0; priorities[prio_idx][j]; j++) {
+                if (expr[i] == priorities[prio_idx][j])
+                    return i;
+            }
+        }
+        prio_idx++;
+    }
+    return -1;
+}
+
+//     1+23+45/67-8*9
 char *process_expr(char *expr)
 {
-    char *result = malloc(sizeof(char) * (strlen(expr)));
+    int ope_idx = find_next_operator(expr);
+    char *operation = calloc(strlen(expr) + 1, sizeof(char));
+    int i = 0;
+    int j = 0;
 
-    strcpy(result, "1");
-    return result;
+    while (ope_idx != -1) {
+        memset(operation, 0, strlen(expr));
+        for (i = ope_idx + 1; expr[i]; i++) {
+            if (Utils.is_not_a_number(expr[i]))
+                break;
+        }
+        // TODO: Check for this case:     1+-1*2
+        for (j = ope_idx - 1; expr[j]; j--) {
+            if (Utils.is_not_a_number(expr[j]))
+                break;
+        }
+        j--;
+        for (int k = 0; j != i; j++)
+            operation[k++] = expr[j];
+        operation = process_operation(operation, find_next_operator(operation));
+
+        ope_idx = find_next_operator(expr);
+    }
+    free(operation);
+    return expr;
 }
 
 char *handle_parenthesis(char *expr) {
@@ -29,7 +87,7 @@ char *handle_parenthesis(char *expr) {
     // Go to first ending priority parenthesis
     for (; expr[i] && expr[i] != ')'; i++);
     // If none found, then exit with expr
-    if (expr[i] == NULL)
+    if (expr[i] == 0)
         return expr;
     // While not to opening parenthesis, continue going left
     for (j = i; expr[j] != '('; j--);
@@ -50,8 +108,7 @@ char *handle_parenthesis(char *expr) {
         expr[j++] = expr[i];
     // Add forced null char
     expr[j] = '\0';
-    // Free resources
-    free(sub_expr);
+    // Free resources (don't free sub_expr because process_expr doesn't malloc, it uses the ptr given)
     free(result);
     return expr;
 }
