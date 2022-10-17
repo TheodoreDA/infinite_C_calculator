@@ -1,5 +1,5 @@
-#include "../includes/null.h"
-#include "../includes/globals.h"
+#include "../../includes/null.h"
+#include "../../includes/globals.h"
 
 const char *contains(const char *haystack, const char *needles)
 {

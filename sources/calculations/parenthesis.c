@@ -1,5 +1,5 @@
-#include "../includes/null.h"
-#include "../includes/bistro.h"
+#include "../../includes/null.h"
+#include "../../includes/bistro.h"
 #include <stdlib.h>
 
 char *handle_parenthesis(char *expr) {

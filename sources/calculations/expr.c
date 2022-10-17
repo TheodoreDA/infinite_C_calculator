@@ -1,6 +1,6 @@
-#include "../includes/bistro.h"
-#include "../includes/null.h"
-#include "../includes/globals.h"
+#include "../../includes/bistro.h"
+#include "../../includes/null.h"
+#include "../../includes/globals.h"
 #include <stdlib.h>
 #include <string.h>
 

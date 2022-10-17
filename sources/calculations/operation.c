@@ -1,5 +1,5 @@
-#include "../includes/bistro.h"
-#include "../includes/null.h"
+#include "../../includes/bistro.h"
+#include "../../includes/null.h"
 
 char *process_operation(char *operation, int ope_idx)
 {

@@ -2,17 +2,17 @@ NAME		=		bistro
 
 SRC		=		sources/main.c							\
 				sources/check_errors.c					\
-				sources/globals.c						\
+				sources/shared/globals.c				\
 				sources/bistro.c						\
-				sources/parenthesis.c					\
-				sources/expr.c							\
-				sources/operation.c						\
+				sources/calculations/parenthesis.c		\
+				sources/calculations/expr.c				\
+				sources/calculations/operation.c		\
 				sources/infin_operations/infin_add.c	\
 				sources/infin_operations/infin_min.c	\
 				sources/infin_operations/infin_div.c	\
 				sources/infin_operations/infin_mult.c	\
 				sources/infin_operations/infin_mod.c	\
-				sources/utils.c							\
+				sources/shared/utils.c					\
 				sources/logger.c
 
 OBJ		=		$(SRC:%.c=%.o)

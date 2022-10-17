@@ -1,4 +1,4 @@
-#include "../includes/globals.h"
+#include "../../includes/globals.h"
 
 const char *allowed_chars = "0123456789+-/*\%()";
 const char *numbers = "0123456789";
