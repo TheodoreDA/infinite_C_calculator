@@ -1,4 +1,5 @@
 #include "../includes/null.h"
+#include "../includes/globals.h"
 
 const char *contains(const char *haystack, const char *needles)
 {
@@ -11,13 +12,13 @@ const char *contains(const char *haystack, const char *needles)
     return NULL;
 }
 
-char contains_other_than(const char *str, const char *allowed_chars)
+char contains_other_than(const char *str, const char *to_exclude)
 {
     for (int i = 0; str[i]; i++) {
         char tmp = 0;
 
-        for (int j = 0; allowed_chars[j]; j++) {
-            if (str[i] == allowed_chars[j]) {
+        for (int j = 0; to_exclude[j]; j++) {
+            if (str[i] == to_exclude[j]) {
                 tmp = 1;
                 break;
             }
@@ -26,6 +27,24 @@ char contains_other_than(const char *str, const char *allowed_chars)
             return 1;
     }
     return 0;
+}
+
+char is_a_number(const char c)
+{
+    for (int i = 0; numbers[i]; i++) {
+        if (c == numbers[i])
+            return 1;
+    }
+    return 0;
+}
+
+char is_not_a_number(const char c)
+{
+    for (int i = 0; numbers[i]; i++) {
+        if (c == numbers[i])
+            return 0;
+    }
+    return 1;
 }
 
 char is_in(const char c, const char *str)
