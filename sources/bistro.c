@@ -61,7 +61,7 @@ int bistro(const char *expr)
     char *without_parenthesis = handle_parenthesis(strdup(expr));
     char *result = process_expr(without_parenthesis);
     printf("Result: %s\n", result);
-    //free(without_parenthesis);
-    //free(result);
+    free(without_parenthesis);
+    free(result);
     return 0;
 }
