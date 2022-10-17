@@ -29,9 +29,13 @@ char *process_expr(char *expr)
     char *result = NULL;
     int i = 0;
     int j = 0;
+    int k = 0;
 
     while (ope_idx != -1) {
         memset(operation, 0, strlen(expr));
+
+        // Find the boundries of the targeted operation
+        // TODO: Check for this case:     1+1*-2+3
         for (i = ope_idx + 1; expr[i]; i++) {
             if (Utils.is_not_a_number(expr[i]))
                 break;
@@ -41,15 +45,24 @@ char *process_expr(char *expr)
             if (Utils.is_not_a_number(expr[j]))
                 break;
         }
-        j++;
-        for (int k = 0; j != i; j++)
-            operation[k++] = expr[j];
+
+        // Process the targeted operation
+        k = j + 1;
+        for (int l = 0; k != i; k++)
+            operation[l++] = expr[k];
         result = process_operation(operation, find_next_operator(operation));
         if (result == NULL) {
             free(operation);
             return NULL;
         }
-        // HERE
+
+        // Place result of targeted operation into expr
+        j += 1;
+        for (int l = 0; result[l]; l++)
+            expr[j++] = result[l];
+        for (; expr[i]; i++)
+            expr[j++] = expr[i];
+        expr[j] = '\0';
 
         free(result);
         ope_idx = find_next_operator(expr);
