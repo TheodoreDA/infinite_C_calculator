@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// TODO: check if - is an operator or negative nbr
 int find_next_operator(char *expr)
 {
     int prio_idx = 0;
@@ -12,8 +11,14 @@ int find_next_operator(char *expr)
     while (priorities[prio_idx]) {
         for (int i = 0; expr[i]; i++) {
             for (int j = 0; priorities[prio_idx][j]; j++) {
-                if (expr[i] == priorities[prio_idx][j])
+                if (expr[i] == priorities[prio_idx][j]) {
+                    // Check when a minus found, wether it has an operator before
+                    if (expr[i] == '-') {
+                        if (i != 0 && Utils.is_not_a_number(expr[i - 1]))
+                            return i - 1;
+                    }
                     return i;
+                }
             }
         }
         prio_idx++;
