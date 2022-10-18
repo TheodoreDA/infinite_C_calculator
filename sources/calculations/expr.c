@@ -40,15 +40,19 @@ char *process_expr(char *expr)
         memset(operation, 0, strlen(expr));
 
         // Find the boundries of the targeted operation
-        // TODO: Check for this case:     1+1*-2+3
         for (i = ope_idx + 1; expr[i]; i++) {
-            if (Utils.is_not_a_number(expr[i]))
-                break;
+            if (Utils.is_not_a_number(expr[i])) {
+                if (expr[i] == '-' && i != ope_idx + 1)
+                    break;
+            }
         }
-        // TODO: Check for this case:     1+-1*2
-        for (j = ope_idx - 1; expr[j]; j--) {
-            if (Utils.is_not_a_number(expr[j]))
-                break;
+        for (j = ope_idx - 1; j > 0; j--) {
+            if (Utils.is_not_a_number(expr[j])) {
+                if (expr[j] == '-') {
+                    if (Utils.is_not_a_number(expr[j - 1]))
+                        break;
+                }
+            }
         }
 
         // Process the targeted operation
