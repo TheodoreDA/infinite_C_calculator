@@ -1,47 +1,62 @@
 NAME		=		bistro
 
-SRC		=		sources/main.c							\
-				sources/check_errors.c					\
-				sources/shared/globals.c				\
-				sources/bistro.c						\
-				sources/calculations/parenthesis.c		\
-				sources/calculations/expr.c				\
-				sources/calculations/operation.c		\
-				sources/infin_operations/infin_add.c	\
-				sources/infin_operations/infin_min.c	\
-				sources/infin_operations/infin_div.c	\
-				sources/infin_operations/infin_mult.c	\
-				sources/infin_operations/infin_mod.c	\
-				sources/shared/utils.c					\
-				sources/logger.c
+SRC			=		sources/main.c							\
+					sources/check_errors.c					\
+					sources/shared/globals.c				\
+					sources/bistro.c						\
+					sources/calculations/parenthesis.c		\
+					sources/calculations/expr.c				\
+					sources/calculations/operation.c		\
+					sources/infin_operations/infin_add.c	\
+					sources/infin_operations/infin_min.c	\
+					sources/infin_operations/infin_div.c	\
+					sources/infin_operations/infin_mult.c	\
+					sources/infin_operations/infin_mod.c	\
+					sources/shared/utils.c					\
+					sources/logger.c
 
-OBJ		=		$(SRC:%.c=%.o)
+OBJ			=		$(SRC:%.c=%.o)
 
-CC		=		gcc
+CC			=		gcc
 
-RM		=		rm -f
+RM			=		rm -f
 
-INCLUDES	=		-Iinclude
-
-CFLAGS		=		-W -Wall -Wshadow -Wextra $(INCLUDES)
+CFLAGS		=		-W -Wall -Wshadow -Wextra 
 
 LDFLAGS		=		
 
-$(NAME):	all
+$(NAME):		all
 
-all:		$(OBJ)
+all:			$(OBJ)
 	$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(LDFLAGS)
 
 clean:
 	$(RM) $(OBJ)
-	$(RM) *~
-	$(RM) include/*~
-	$(RM) sources/*~
+	$(RM) sources/*.gc*
+	$(RM) sources/shared/*.gc*
+	$(RM) sources/calculations/*.gc*
+	$(RM) sources/infin_operations/*.gc*
+	$(RM) coverage*
+	$(MAKE) -C tests/ clean
 
-fclean:		clean
+fclean:			clean
 	$(RM) $(NAME)
+	$(MAKE) -C tests/ fclean
 
-re:		fclean all
+re:				fclean all
 
-debug:		CFLAGS += -g
-debug:		re
+debug:			CFLAGS += -g
+debug:			re
+
+tests_run:		fclean
+	$(MAKE) -C tests
+	./tests/unit_tests
+
+coverage:		fclean
+coverage:		tests_run
+	gcovr -e tests/
+
+html_coverage:	fclean
+html_coverage:	tests_run
+	gcovr -e tests/ --html-details coverage.html
+	xdg-open coverage.html
