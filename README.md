@@ -31,8 +31,8 @@ A calculator made in C, so you can calculate infinite expressions
 ## Getting Started
     
 #### Languages and libraries used in this project (separate with commas):
-C,Makefile
-    
+C, Makefile
+
 #### Installation: 
 ```  
 git clone git@github.com:TheodoreDA/infinite_C_calculator.git
@@ -47,7 +47,13 @@ cd infinite_C_calculator && make
 ```
 
 #### Tests:
-Work in progress
+```
+make tests_run
+```
+coverage:
+```
+make coverage
+```
 
 #### Contribution Guidelines:
 Work in progess
