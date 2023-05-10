@@ -8,7 +8,7 @@ int find_next_operator(char *expr)
 {
     int prio_idx = 0;
 
-    while (priorities[prio_idx]) {
+    while (prio_idx < NBR_GROUP_PRIO) {
         for (int i = 0; expr[i]; i++) {
             for (int j = 0; priorities[prio_idx][j]; j++) {
                 if (expr[i] == priorities[prio_idx][j]) {
@@ -30,35 +30,39 @@ int find_next_operator(char *expr)
 char *process_expr(char *expr)
 {
     int ope_idx = find_next_operator(expr);
-    char *operation = calloc(strlen(expr) + 1, sizeof(char));
+    char *operation = malloc(sizeof(char) * (strlen(expr) + 1));
     char *result = NULL;
     int i = 0;
     int j = 0;
     int k = 0;
 
     while (ope_idx != -1) {
-        memset(operation, 0, strlen(expr));
+        memset(operation, '\0', strlen(expr) + 1);
 
         // Find the boundries of the targeted operation
         for (i = ope_idx + 1; expr[i]; i++) {
             if (Utils.is_not_a_number(expr[i])) {
-                if (expr[i] == '-' && i != ope_idx + 1)
+                if (expr[j] != '-')
+                    break;
+                if (i != ope_idx + 1)
                     break;
             }
         }
         for (j = ope_idx - 1; j > 0; j--) {
             if (Utils.is_not_a_number(expr[j])) {
-                if (expr[j] == '-') {
-                    if (Utils.is_not_a_number(expr[j - 1]))
-                        break;
-                }
+                if (expr[j] != '-')
+                    break;
+                if (Utils.is_not_a_number(expr[j - 1]))
+                    break;
             }
         }
 
         // Process the targeted operation
-        k = j + 1;
-        for (int l = 0; k != i; k++)
+        k = j;
+        for (int l = 0; k != i; k++) {
             operation[l++] = expr[k];
+            operation[l] = '\0';
+        }
         result = process_operation(operation, find_next_operator(operation));
         if (result == NULL) {
             free(operation);
@@ -66,7 +70,6 @@ char *process_expr(char *expr)
         }
 
         // Place result of targeted operation into expr
-        j += 1;
         for (int l = 0; result[l]; l++)
             expr[j++] = result[l];
         for (; expr[i]; i++)

@@ -12,7 +12,7 @@ char *handle_parenthesis(char *expr) {
     // Go to first ending priority parenthesis
     for (; expr[i] && expr[i] != ')'; i++);
     // If none found, then exit with expr
-    if (expr[i] == 0)
+    if (expr[i] == NULL)
         return expr;
     // While not to opening parenthesis, continue going left
     for (j = i; expr[j] != '('; j--);

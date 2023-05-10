@@ -1,5 +1,6 @@
 #include "../../includes/null.h"
 #include "../../includes/globals.h"
+#include <string.h>
 
 const char *contains(const char *haystack, const char *needles)
 {
@@ -74,4 +75,15 @@ int count_occurence(const char *haystack, const char needle)
             counter++;
     }
     return counter;
+}
+
+void str_reverse(char *str) {
+    int len = strlen(str);
+
+    for (int i = 0; i < len / 2; i++) {
+        char tmp = str[i];
+
+        str[i] = str[len - 1 - i];
+        str[len - 1 - i] = tmp;
+    }
 }

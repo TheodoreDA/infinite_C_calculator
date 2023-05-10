@@ -9,6 +9,7 @@ struct s_utils {
     char (* is_in)(const char c, const char *str);
     char (* is_not_in)(const char c, const char *str);
     int (* count_occurence)(const char *haystack, const char needle);
+    void (* str_reverse)(char *str);
 };
 typedef struct s_utils utils_t;
 
@@ -19,6 +20,7 @@ char is_in(const char c, const char *str);
 char is_not_in(const char c, const char *str);
 int count_occurence(const char *haystack, const char needle);
 char contains_other_than(const char *str, const char *allowed_chars);
+void str_reverse(char *str);
 
 
 #endif /* !UTILS_H_ */

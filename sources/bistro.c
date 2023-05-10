@@ -15,7 +15,6 @@ int bistro(const char *expr)
     if (result == NULL)
         return 84;
     printf("Result: %s\n", result);
-    free(without_parenthesis);
     free(result);
     return 0;
 }
