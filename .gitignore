@@ -4,4 +4,5 @@ bistro
 unit_tests
 *.gcno
 *.gcda
+vgcore.*
 coverage*
