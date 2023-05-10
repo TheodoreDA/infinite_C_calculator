@@ -37,6 +37,7 @@ clean:
 	$(RM) sources/calculations/*.gc*
 	$(RM) sources/infin_operations/*.gc*
 	$(RM) coverage*
+	$(RM) vgcore.*
 	$(MAKE) -C tests/ clean
 
 fclean:			clean
